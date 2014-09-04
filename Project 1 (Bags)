@@ -1,7 +1,8 @@
+
 /* Name: William Robert Howerton III
  * Class: CSCI 3230 A
  * Project 1: Bags - Large and Small
- * 
+ *
  * Instructions on running the program are found in the main method.
  */
 
@@ -10,239 +11,296 @@
 import java.util.*;
 
 public class Bag {
-	
-	public static void main (String[] args){
-		/* This is the main method from which to run the program. The program will demonstrate two scenarios: one scenario involving a 'small' bag with 20
-		 * randomly generated integers ranging between 0 and 2*10^9. The other scenario will involve a 'large' bag with 1,000,000 randomly generated integers
-		 * ranging between 0 and 2*10^9.
-		 * 
-		 * The 'large' and 'small' bag testing methods will be separated so that each group can be easily commented out to isolate testing environments
-		 * 
-		 * I will display a 'total' running time for each scenario, which will encompass all employed methods.
-		 * 
-		 */
-		
-		
-		//"Small" Testing Environment
-		Bag smallTest = new Bag (20); //the small test bag of size 20
-		Bag smallTest2 = new Bag(15); //another small test bag (for 2 bag operations) of a different size
-		populate(smallTest);
-		populate(smallTest2);
-		
-		
-		
-		
-		//"Large" Testing Environment
-		Bag largeTest = new Bag (1000000); //the large test bag of size 1,000,000
-		Bag largeTest2 = new Bag (850000); //a second large test bag for 2 bag operations
-		populate(largeTest);
-		populate(largeTest2);
-		
-		
-		
-		
-		
-	}
-	
-	public static Bag populate(Bag newBag){
-		/* This method uses a random number generator to quickly populate a given bag. With integer values between 0 and 2,000,000,000.
-		 * 
-		 */
-		
-		int count = 0;
-		Random r = new Random();
-		count ++;
-		for (int i = 0; i < newBag.bag.length; i++){
-			newBag.bag[i] = r.nextInt(2000000000);
-			count ++;
-		}
-		
-		System.out.println("Number of operations for populate method: " + count);
-		return newBag;
-		
-	}
-		
-	protected int bag[]; //this "bag" will handle integer data types
-	private int elements; /*integer value specifying number of elements in the array. 
-	
-	 			   **Note that elements != size. In this program, int size will denote the maximum
-				   *number of elements stored in the array while int elements will store the value of the number of elements currently in the array. Hence, 
-				   *"elements" will always be equal to or less than "size".
-				   */
-	
-	public Bag (int size){
-		int count = 1;
-		bag = new int[size];
-			// A constructor which creates a new "bag" (array of integers) at a specified size of integer = size
-		System.out.println("Number of operations for Bag constructor: " + count);
-		}
-	
-	public void add(int val){
-		
-		int count = 0;
-		
-		if (this.elements < this.bag.length){ //checks whether or not the number of elements is less than the maximum size of the array.
-			count ++;
-			this.bag[elements + 1] = val; //if there isn't at least one space available, an exception is thrown
-			count ++;
-			}
-			else {
-				System.out.println("Bag is full. Could not add object."); //throws exception if there isn't enough space
-				count ++;
-			}
-		this.elements ++;
-		count ++;
-		
-		System.out.println("Number of operations for add method: " + count); //displays number of elementary operations performed
-					
-		}
-	
-	public void remove(int val){
-		
-		int count = 0;
-		
-		if (contains(val)){ //first searches the bag for the value. if the value is not found, the method exits
-			count++;
-			for (int i = 0; i < this.elements; i++){ //for loop runs until it runs out of elements to check. it does not have to go through the entire bag
-				count ++;
-				if (this.bag[i] == val){ //if an element it runs across is equal to the target value, it is deleted
-					count ++;
-					this.bag[i] = this.bag[this.elements - 1]; //value to be deleted (found at index i) is replaced with the last element in the bag.
-					count ++;									//this deletes the element. 
-					this.bag[this.elements - 1] = 0;			//then, the last element of the bag is replaced with 0, eliminating the "old" duplicate.
-					count ++;
-					
-				}
-				}
-		}
-		
-		else {
-			System.out.println(val + "was not found."); //prints an error message if the bag does not contain "val"
-			count ++;
-		}
-		
-		System.out.println("Number of operations for remove method: " + count);
+    
+    public static void main (String[] args){
+   	 /* This is the main method from which to run the program. The program will demonstrate two scenarios: one scenario involving a 'small' bag with 20
+   	  * randomly generated integers ranging between 0 and 2*10^9. The other scenario will involve a 'large' bag with 1,000,000 randomly generated integers
+   	  * ranging between 0 and 2*10^9.
+   	  *
+   	  * The 'large' and 'small' bag testing methods will be separated so that each group can be easily commented out to isolate testing environments
+   	  *
+   	  * I will display a 'total' running time for each scenario, which will encompass all employed methods.
+   	  *
+   	  */
+   	 
+   	 
+   	 //"Small" Testing Environment
+   	 Bag smallTest = new Bag (20); //the small test bag of size 20
+   	 Bag smallTest2 = new Bag(15); //another small test bag (for 2 bag operations) of a different size
+   	 smallTest.populate();
+   	 smallTest2.populate();
+   	 smallTest.removeRandom();
+   	 smallTest.remove(2);
+   	 smallTest.addAll(smallTest2);
+   	 smallTest.add(20);
+   	 smallTest.isEmpty();
+   	 smallTest.size();
+   	 Bag smallUnionTest = smallTest.union(smallTest, smallTest2);
+   	 smallTest.equals(smallTest2);
+   	 smallTest.contains(20);
+   	 
+   	 //"Large" equal method tester
+   	 
+   	 Bag smallEqualTest1 = new Bag (20);
+   	 Bag smallEqualTest2 = new Bag (20);
+   	 
+   	 smallEqualTest1.populate();
+   	 smallEqualTest2.assign(smallEqualTest1); //assigns values from largeEqualTest1 bag to largeEqualTest2 bag.
+   	 System.out.println("Equality of smallEqualTest1 and smallEqualTest2: " + smallEqualTest1.equals(smallEqualTest2));
+   	 
+   	 
+   	 
+   	 
+   	 //"Large" Testing Environment
+   	 Bag largeTest = new Bag (1000000); //the large test bag of size 1,000,000
+   	 Bag largeTest2 = new Bag (850000); //a second large test bag for 2 bag operations
+   	 largeTest.populate();
+   	 largeTest2.populate();
+   	 largeTest.removeRandom();
+   	 largeTest.remove(2);
+   	 largeTest.addAll(smallTest2);
+   	 largeTest.add(20);
+   	 largeTest.isEmpty();
+   	 largeTest.size();
+   	 Bag largeUnionTest = largeTest.union(largeTest, largeTest2);
+   	 largeTest.equals(largeTest2);
+   	 largeTest.contains(50000);
+   	 
+   	 //"Large" equal method tester
+   	 
+   	 Bag largeEqualTest1 = new Bag (1000000);
+   	 Bag largeEqualTest2 = new Bag (1000000);
+   	 
+   	 largeEqualTest1.populate();
+   	 largeEqualTest2.assign(largeEqualTest1); //assigns values from largeEqualTest1 bag to largeEqualTest2 bag.
+   	 System.out.println("Equality of largeEqualTest1 and largeEqualTest2: " + largeEqualTest1.equals(largeEqualTest2));
+   	 
+   	 
+   	 
+   	 
+   	 
+    }
+    
+    public void assign(Bag newBag){
+    	/* This method assigns the exact elements of one bag to another bag of equal size. 
+    	 * This sole purpose of this method is to create two identical bags to test the bag.equals() method.
+    	 * 
+    	 */
+    	
+    	int count = 0;
+    	
+    	for (int i = 0; i < newBag.bag.length; i++){
+    		this.bag[i] = newBag.bag[i];
+    		count++;
+    	}
+    	
+    	System.out.println("Number of operations for assign method: " + count);
+    	
+    }
+    
+    public void populate(){
+   	 /* This method uses a random number generator to quickly populate a given bag. With integer values between 0 and 2,000,000,000.
+   	  *
+   	  */
+   	 
+   	 int count = 0;
+   	 Random r = new Random();
+   	 count ++;
+   	 for (int i = 0; i < this.bag.length; i++){
+   		 this.bag[i] = r.nextInt(2000000000);
+   		 this.elements ++;
+   		 count ++;
+   	 }
+   	 
+   	 System.out.println("Number of operations for populate method: " + count);
+   			 
+    }
+   	 
+    protected int bag[]; //this "bag" will handle integer data types
+    private int elements; /*integer value specifying number of elements in the array.
+    
+        			**Note that elements != size. In this program, int size will denote the maximum
+   				*number of elements stored in the array while int elements will store the value of the number of elements currently in the array. Hence,
+   				*"elements" will always be equal to or less than "size".
+   				*/
+    
+    public Bag (int size){
+   	 int count = 1;
+   	 bag = new int[size];
+   		 // A constructor which creates a new "bag" (array of integers) at a specified size of integer = size
+   	 System.out.println("Number of operations for Bag constructor: " + count);
+   	 }
+    
+    public void add(int val){
+   	 
+   	 int count = 0;
+   	 
+   	 if (this.elements < this.bag.length){ //checks whether or not the number of elements is less than the maximum size of the array.
+   		 count ++;
+   		 this.bag[elements + 1] = val; //if there isn't at least one space available, an exception is thrown
+   		 count ++;
+   		 }
+   		 else {
+   			 System.out.println("Bag is full. Could not add object."); //throws exception if there isn't enough space
+   			 count ++;
+   		 }
+   	 this.elements ++;
+   	 count ++;
+   	 
+   	 System.out.println("Number of operations for add method: " + count); //displays number of elementary operations performed
+   				 
+   	 }
+    
+    public void remove(int val){
+   	 
+   	 int count = 0;
+   	 
+   	 if (contains(val)){ //first searches the bag for the value. if the value is not found, the method exits
+   		 count++;
+   		 for (int i = 0; i < this.elements; i++){ //for loop runs until it runs out of elements to check. it does not have to go through the entire bag
+   			 count ++;
+   			 if (this.bag[i] == val){ //if an element it runs across is equal to the target value, it is deleted
+   				 count ++;
+   				 this.bag[i] = this.bag[this.elements - 1]; //value to be deleted (found at index i) is replaced with the last element in the bag.
+   				 count ++;   								 //this deletes the element.
+   				 this.bag[this.elements - 1] = 0;   		 //then, the last element of the bag is replaced with 0, eliminating the "old" duplicate.
+   				 count ++;
+   				 
+   			 }
+   			 }
+   	 }
+   	 
+   	 else {
+   		 System.out.println(val + "was not found."); //prints an error message if the bag does not contain "val"
+   		 count ++;
+   	 }
+   	 
+   	 System.out.println("Number of operations for remove method: " + count);
 
-		
-	}
-	
-	public void removeRandom(){
-		int count = 0;
-		
-		Random r = new Random(); //r is a new pseudorandom number generator
-		count++;
-		this.bag[r.nextInt(this.elements)] = this.bag[this.elements - 1]; //this deletion algorithm utilizes the same strategy as the "remove" method.
-		count++;							//a random integer (maximum set to number of elements in the bag) is generated as the index to be removed
-		this.bag[this.elements - 1] =0;		//the element at that index is replaced with the last element of the bag, which is then replaced with 0
-		count++;							//to eliminate the duplicate. 
-		
-		System.out.println("Number of operations for removeRandom method: " + count);
-		
-			
-	}
+   	 
+    }
+    
+    public void removeRandom(){
+   	 int count = 0;
+   	 
+   	 Random r = new Random(); //r is a new pseudorandom number generator
+   	 count++;
+   	 this.bag[r.nextInt(this.elements)] = this.bag[this.elements - 1]; //this deletion algorithm utilizes the same strategy as the "remove" method.
+   	 count++;   						 //a random integer (maximum set to number of elements in the bag) is generated as the index to be removed
+   	 this.bag[this.elements - 1] =0;   	 //the element at that index is replaced with the last element of the bag, which is then replaced with 0
+   	 count++;   						 //to eliminate the duplicate.
+   	 
+   	 System.out.println("Number of operations for removeRandom method: " + count);
+   	 
+   		 
+    }
 
-	public int size(){
-		
-		int count = 1; //default value set to 1, as there is only one operation performed in this method.
-		System.out.println("Number of operations for size method: " + count); 
-		return this.bag.length; //returns length of the bag in question.
-		
-	}
-	
-	public boolean isEmpty(){
-		int count = 1; //default set to 1.
-		boolean empty = false; //default boolean "empty" is false (the more likely result)
-		
-		if (this.elements == 0) empty = true; //changes boolean "empty" to true if there are no elements in the bag.
-		System.out.println("Number of operations for isEmpty method: " + count);
-		return empty; //returns boolean "empty"
-		
-	}
-	
-	public boolean contains(int val){
-		int count = 0;
-		boolean contains = false;
-		count ++;
-		
-		for(int i = 0; i < this.elements; i++){ //'for' loop runs through all the elements of the bag.
-			
-			if (this.bag[i] == val) { //brute force search checks each individual element for equivalence to val. if so, boolean "contains" set to true.
-				
-				contains = true;
-				count ++;
-			}
-			
-		}
-		
-		count++;
-		System.out.println("Number of operations for contains method: " + count);
-		return contains; //returns default 'false' value if the brute force search proves unsuccessful.
-		
-		
-	}
+    public int size(){
+   	 
+   	 int count = 1; //default value set to 1, as there is only one operation performed in this method.
+   	 System.out.println("Number of operations for size method: " + count);
+   	 return this.bag.length; //returns length of the bag in question.
+   	 
+    }
+    
+    public boolean isEmpty(){
+   	 int count = 1; //default set to 1.
+   	 boolean empty = false; //default boolean "empty" is false (the more likely result)
+   	 
+   	 if (this.elements == 0) empty = true; //changes boolean "empty" to true if there are no elements in the bag.
+   	 System.out.println("Number of operations for isEmpty method: " + count);
+   	 return empty; //returns boolean "empty"
+   	 
+    }
+    
+    public boolean contains(int val){
+   	 int count = 0;
+   	 boolean contains = false;
+   	 count ++;
+   	 
+   	 for(int i = 0; i < this.elements - 1; i++){ //'for' loop runs through all the elements of the bag.
+   		 
+   		 if (this.bag[i] == val) { //brute force search checks each individual element for equivalence to val. if so, boolean "contains" set to true.
+   			 
+   			 contains = true;
+   			 count++;
+   			 System.out.println(val + "was found at index " + i);
+   			 count ++;
+   		 }
+   		 
+   	 }
+   	 
+   	 count++;
+   	 count++;
+   	 System.out.println("Number of operations for contains method: " + count);
+   	 if (contains == false) System.out.println(val + " was not found. Sorry. :(");
+   	 return contains; //returns default 'false' value if the brute force search proves unsuccessful.
+   	 
+   	 
+    }
 
-	public Bag addAll(Bag newBag){
-		//this method adds the entire 'newBag' to the main bag in question
-		int count = 0;
-		
-		if ((this.elements + newBag.bag.length) <= this.size()){ //checks to make sure the main bag has enough room. the sum of elements in main bag and 
-							//length of the newBag must not exceed total size of the main bag, else the main bag cannot accept all the new contents
-			count ++;
-			
-			for (int i = 0; i < newBag.bag.length; i ++){ //since the method is designed to add newBag and its entirety, the loop repeats for the entire length
-															//of newBag
-				this.bag[this.elements + 1 + i] = newBag.bag[i]; //since elements starts at 0 and i starts at 0; a '1' is added to prevent the last element
-				count ++;								//of the main bag from being deleted. each subsequent element of newBag takes place in index positions
-														//proceeding the last element in the main bag.
-			}
-			
-		}
-		count ++;
-		System.out.println("Number of operations for addAll method: " + count);
-		return this; //returns the main bag object
-	}
-	
-	public Bag union(Bag newBag1,Bag newBag2){
-		int count = 0;
-		/* Note: I considered a unionBag with a size equivalent to the combined size of the two input bags, however this method is designed to add existing
-		 * elements. For instance, let's consider the possibility that newBag1 & 2 each have a maximum size of 1000 elements. newBag1 has 100 elements and 
-		 * newBag2 has 1000 elements. Their combined size is 2000 but the total elements is still only 1000, since I will be combining the first 100 elements
-		 * of each bag and then simply combining the last 900 elements of newBag2 with 0 (the default value of the placeholder in the array).
-		 */
-		Bag unionBag = new Bag(Math.max(newBag1.elements,newBag2.elements)); //creates a new bag object termed 'unionBag' with the size equivalent to the  
-		count ++;															//greatest number of elements present in the two input bags.
-		for (int i =0; i < unionBag.size(); i ++){ //loop iterates for the size of unionBag.
-			unionBag.bag[i] = newBag1.bag[i]+newBag2.bag[i]; //this union method adds respective elements of the two input bags into one element at the same
-			count++;										//index position in the unionBag
-			
-		}
-		count++;
-		System.out.println("Number of operations for Union method: " + count);
-		return unionBag; //returns the newly created unionBag object
-		
-	}
-	
-	public boolean equals(int[] newBag){
-		
-		int count = 0;
-		boolean equals = true; //set the default value to true.
-		count ++;
-		if (this.size() != newBag.length) { //terminates the program early and sets 'equals' to false if the two bags are not equal in length.
-			count++;
-			equals = false;
-		}
-		
-		for (int i = 0; i < newBag.length; i ++){ //assuming they are equal in length, this loop cycles through the entire length of one bag.
-			
-			if (this.bag[i] != newBag[i]) equals = false; //in this loop, values at index i in the main bag are compared to values at index i of the newBag
-			count ++;									//if at ANY point during the loop the values are found to be UNEQUAL, 'equals' changes to false.
-		}
-		count++;
-		System.out.println("Number of operations for equals method :" + count);
-		return equals;	//false is returned if the lengths are not equal, or if any two elements at index i are different.
-	}
-}	
-
-
-
-
+    public Bag addAll(Bag newBag){
+   	 //this method adds the entire 'newBag' to the main bag in question
+   	 int count = 0;
+   	 
+   	 if ((this.elements + newBag.bag.length) <= this.bag.length){ //checks to make sure the main bag has enough room. the sum of elements in main bag and
+   						 //length of the newBag must not exceed total size of the main bag, else the main bag cannot accept all the new contents
+   		 count ++;
+   		 
+   		 for (int i = 0; i < newBag.bag.length; i ++){ //since the method is designed to add newBag and its entirety, the loop repeats for the entire length
+   														 //of newBag
+   			 this.bag[this.elements + 1 + i] = newBag.bag[i]; //since elements starts at 0 and i starts at 0; a '1' is added to prevent the last element
+   			 count ++;   							 //of the main bag from being deleted. each subsequent element of newBag takes place in index positions
+   													 //proceeding the last element in the main bag.
+   		 }
+   		 
+   	 }
+   	 count ++;
+   	 System.out.println("Number of operations for addAll method: " + count);
+   	 return this; //returns the main bag object
+    }
+    
+    public Bag union(Bag newBag1,Bag newBag2){
+   	 int count = 0;
+   	 /* Note: I considered a unionBag with a size equivalent to the combined size of the two input bags, however this method is designed to add existing
+   	  * elements. For instance, let's consider the possibility that newBag1 & 2 each have a maximum size of 1000 elements. newBag1 has 100 elements and
+   	  * newBag2 has 1000 elements. Their combined size is 2000 but the total elements is still only 1000, since I will be combining the first 100 elements
+   	  * of each bag and then simply combining the last 900 elements of newBag2 with 0 (the default value of the placeholder in the array).
+   	  */
+   	 Bag unionBag = new Bag(Math.max(newBag1.elements, newBag2.elements)); //creates a new bag object termed 'unionBag' with the size equivalent to the  
+   	 count ++;   														 //greatest number of elements present in the two input bags.
+   	 for (int i =0; i < newBag1.bag.length; i ++){ //loop iterates for the size of unionBag.
+   		 unionBag.bag[i] = newBag1.bag[i]; //this union method adds respective elements of the two input bags into one element at the same
+   		 count++;   									 //index position in the unionBag
+   	 }
+   	 for (int i = 0; i < newBag2.bag.length; i ++){
+   		 unionBag.bag[i] += newBag2.bag[i];
+   		 unionBag.elements ++;
+   		 count++;
+   	 }
+   	 count++;
+   	 System.out.println("Number of operations for Union method: " + count);
+   	 return unionBag; //returns the newly created unionBag object
+   	 
+    }
+    
+    public boolean equals(Bag newBag){
+   	 
+   	 int count = 0;
+   	 boolean equals = true; //set the default value to true.
+   	 count ++;
+   	 if (this.bag.length != newBag.bag.length) { //terminates the program early and sets 'equals' to false if the two bags are not equal in length.
+   		 count++;
+   		 equals = false;
+   	 }
+   	 
+   	 for (int i = 0; i < newBag.bag.length; i ++){ //assuming they are equal in length, this loop cycles through the entire length of one bag.
+   		 
+   		 if (this.bag[i] != newBag.bag[i]) equals = false; //in this loop, values at index i in the main bag are compared to values at index i of the newBag
+   		 count ++;   								 //if at ANY point during the loop the values are found to be UNEQUAL, 'equals' changes to false.
+   	 }
+   	 count++;
+   	 System.out.println("Number of operations for equals method: " + count);
+   	 return equals; //false is returned if the lengths are not equal, or if any two elements at index i are different.
+    }
+}    
