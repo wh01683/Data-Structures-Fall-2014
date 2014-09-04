@@ -4,14 +4,24 @@
  * Project 1: Bags - Large and Small
  *
  * Instructions on running the program are found in the main method.
+ * 
+ * To begin, simply copy the source code and paste into a Java class through eclipse. The class file must be named "Bag"
+ * to work properly.
  */
 
 
 
+import java.sql.Time;
 import java.util.*;
 
+
+
+
 public class Bag {
-    
+	
+	static long startTime = System.nanoTime();
+	
+	 
     public static void main (String[] args){
    	 /* This is the main method from which to run the program. The program will demonstrate two scenarios: one scenario involving a 'small' bag with 20
    	  * randomly generated integers ranging between 0 and 2*10^9. The other scenario will involve a 'large' bag with 1,000,000 randomly generated integers
@@ -22,7 +32,8 @@ public class Bag {
    	  * I will display a 'total' running time for each scenario, which will encompass all employed methods.
    	  *
    	  */
-   	 
+   	     
+    	
    	 
    	 //"Small" Testing Environment
    	 Bag smallTest = new Bag (20); //the small test bag of size 20
@@ -39,7 +50,7 @@ public class Bag {
    	 smallTest.equals(smallTest2);
    	 smallTest.contains(20);
    	 
-   	 //"Large" equal method tester
+   	 //"Small" equal method tester
    	 
    	 Bag smallEqualTest1 = new Bag (20);
    	 Bag smallEqualTest2 = new Bag (20);
@@ -75,7 +86,8 @@ public class Bag {
    	 largeEqualTest2.assign(largeEqualTest1); //assigns values from largeEqualTest1 bag to largeEqualTest2 bag.
    	 System.out.println("Equality of largeEqualTest1 and largeEqualTest2: " + largeEqualTest1.equals(largeEqualTest2));
    	 
-   	 
+   	System.out.println("The entire program executed in: " + duration + " milliseconds."); //prints the execution time
+   												//in milliseconds in the console.
    	 
    	 
    	 
@@ -303,4 +315,12 @@ public class Bag {
    	 System.out.println("Number of operations for equals method: " + count);
    	 return equals; //false is returned if the lengths are not equal, or if any two elements at index i are different.
     }
+    
+    static long endTime = System.nanoTime();
+
+	static long duration = (endTime - startTime);
+	
+	
 }    
+
+
